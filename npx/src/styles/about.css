@@ -1,13 +1,34 @@
+
+div.gallery {
+  margin: 5px;
+  border: 1px solid #ccc;
+  float: left;
+  width: 180px;
+}
+
+div.gallery:hover {
+  border: 1px solid #777;
+}
+
+div.gallery img {
+  width: 100%;
+  height: 160px;
+}
+
+div.desc {
+  padding: 15px;
+  text-align: center;
+}
+
 .about-section {
-    padding: 20px;
-  }
-  
-  .about-section h2 {
-    font-size: 24px;
-    color: black;
-  }
-  
-  .about-section p {
-    color: gray;
-  }
-  
+  padding: 20px;
+}
+
+.about-section h2 {
+  font-size: 24px;
+  color: black;
+}
+
+.about-section p {
+  color: gray;
+}

@@ -11,6 +11,7 @@ const Header = () => {
           <li><Link to="/about">Про нас</Link></li>
           <li><Link to="/services">Служіння</Link></li>
           <li><Link to="/contact">Контакти</Link></li>
+          <li><Link to="/newspage">Новини</Link></li>
           <li><Link to="/donate" className="donate-button">Пожертви</Link></li>
         </ul>
       </nav>

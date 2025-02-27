@@ -1,8 +1,13 @@
 import "../styles/hero.css";
 
 const Hero = () => {
+  const backgroundImage = '/image/Church/church.png'; 
+
   return (
-    <section className="hero" style={{ backgroundImage: "url('/images/church-hero.jpg')" }}>
+    <section
+      className="hero"
+      style={{ backgroundImage: `url(${backgroundImage})` }}
+    >
       <h2>Ласкаво просимо до нашої церкви</h2>
     </section>
   );

@@ -1,17 +1,14 @@
 .hero {
-    height: 400px;
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: white;
-  }
-  
-  .hero h2 {
-    background: rgba(0, 0, 0, 0.5);
-    padding: 10px 15px;
-    border-radius: 5px;
-  }
-  
+  height: 100vh; /* Висота на весь екран */
+  background-size: cover; /* Зображення покриває весь екран */
+  background-position: center; /* Центрує зображення */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white; /* Колір тексту */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Тінь для тексту */
+}
+
+.hero h2 {
+  font-size: 3rem; /* Розмір шрифту */
+}
