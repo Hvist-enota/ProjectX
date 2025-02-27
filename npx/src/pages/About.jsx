@@ -6,7 +6,6 @@ const About = () => {
       <h2>Про нашу церкву</h2>
       <p>Церква має історію служіння своїй громаді та мешканцям села.</p>
       
-      {/* Галерея */}
       <div className="gallery">
         <img src="/image/Church/poc.png" alt="Церква 1" />
         <div className="desc">Батюшка</div>
