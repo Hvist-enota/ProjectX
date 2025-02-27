@@ -1,0 +1,19 @@
+.services-section {
+    padding: 20px;
+  }
+  
+  .services-section h2 {
+    font-size: 24px;
+    color: black;
+  }
+  
+  .services-section ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .services-section li {
+    color: gray;
+    margin: 5px 0;
+  }
+  

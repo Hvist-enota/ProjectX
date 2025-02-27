@@ -1,0 +1,31 @@
+.header {
+    background: white;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .header nav ul {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .header nav ul li a {
+    text-decoration: none;
+    color: black;
+    transition: color 0.3s;
+  }
+  
+  .header nav ul li a:hover {
+    color: blue;
+  }
+  
+  .header .donate-button {
+    background: blue;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+  }
+  
