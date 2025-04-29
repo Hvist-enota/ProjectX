@@ -1,41 +1,32 @@
-import "../styles/about.css";
+import { useEffect, useState } from 'react';
+import { getAboutImages } from '../services/aboutService';
+import apiClient from "../api/axiosConfig";
 
-const About = () => {
+export default function About() {
+  const [images, setImages] = useState([]);
+
+  useEffect(() => {
+    getAboutImages().then(setImages);
+  }, []);
+
   return (
-    <section className="about-section">
-      <h2>Про нашу церкву</h2>
-      <p>Церква має історію служіння своїй громаді та мешканцям села.</p>
-      
-      <div className="gallery">
-        <img src="/image/Church/poc.png" alt="Церква 1" />
-        <div className="desc">Батюшка</div>
+    <div className="about-section container py-4">
+      <h2 className="display-6">Про нас</h2>
+      <p className="text-muted">Церква - місце, де люди можуть знайти спокій, силу, натхнення, допомогу, спілкування, радість, мир і багато іншого.</p>
+      <div className="row">
+        {images.map(img => (
+          <div key={img.id} className="col-12 col-sm-4 col-md-3 mb-3">
+            <div className="card">
+              <img src={apiClient.defaults.baseURL + "images/aboutUsImages/" + img?.filePath} className="card-img-top img-fluid" alt={img.name} />
+              <div className="card-body text-center">
+                <p className="card-text">{img.name}</p>
+                <p className="card-text">{img.description}</p>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
-      <div className="gallery">
-        <img src="/image/Church/tianka.png" alt="Церква 2" />
-        <div className="desc">монашка</div>
-      </div>
-      <div className="gallery">
-        <img src="/image/Church/army.png" alt="Церква 3" />
-        <div className="desc">Прихожани</div>
-      </div>
-      <div className="gallery">
-        <img src="/image/about/about1.gif" alt="Церква 4" />
-        <div className="desc">Святкові служіння</div>
-      </div>
-      <div className="gallery">
-        <img src="/image/about/about2.gif" alt="Церква 4" />
-        <div className="desc">Святкові служіння</div>
-      </div>
-      <div className="gallery">
-        <img src="/image/about/about3.gif" alt="Церква 4" />
-        <div className="desc">Святкові служіння</div>
-      </div>
-      <div className="gallery">
-        <img src="/image/about/about4.gif" alt="Церква 4" />
-        <div className="desc">Святкові служіння</div>
-      </div>
-    </section>
+    </div>
   );
-};
+}
 
-export default About;
