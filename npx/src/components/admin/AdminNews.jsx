@@ -3,6 +3,7 @@ import * as newsService from '../../services/newsService';
 import { format, parseISO } from 'date-fns';
 import { uk } from 'date-fns/locale';
 import { Modal, Button, Form, Alert } from 'react-bootstrap';
+import '../../styles/admin.css';
 
 export default function AdminNews() {
   const [newsList, setNewsList] = useState([]);
@@ -130,57 +131,69 @@ export default function AdminNews() {
   };
 
   return (
-    <div className="card shadow-sm">
-      <div className="card-header bg-white d-flex justify-content-between align-items-center">
-        <h5 className="mb-0">Новини</h5>
-        <button 
-          className="btn btn-success btn-sm" 
-          onClick={handleCreate}
-        >
-          + Додати новину
-        </button>
+    <div>
+      <div className="admin-header">
+        <h2>📰 Новини</h2>
+        <p>Керуйте новинами вашої церкви</p>
       </div>
-      
-      <div className="card-body p-0">
-        {error && (
-          <Alert variant="danger" className="m-3">
-            {error}
-          </Alert>
-        )}
+
+      {error && (
+        <div className="admin-alert admin-alert-error">
+          ⚠️ {error}
+        </div>
+      )}
+
+      <div className="admin-card">
+        <div className="admin-card-header">
+          <h3 className="admin-card-title">Список новин</h3>
+          <button 
+            className="admin-btn admin-btn-primary admin-btn-sm" 
+            onClick={handleCreate}
+          >
+            ➕ Додати новину
+          </button>
+        </div>
         
         {loading ? (
-          <div className="text-center p-5">
-            <div className="spinner-border text-primary" role="status">
-              <span className="visually-hidden">Завантаження...</span>
-            </div>
+          <div className="admin-loading">
+            <div className="admin-spinner"></div>
+            Завантаження новин...
+          </div>
+        ) : newsList.length === 0 ? (
+          <div className="admin-empty-state">
+            <div className="admin-empty-icon">📰</div>
+            <h3 className="admin-empty-title">Немає новин</h3>
+            <p className="admin-empty-text">Почніть додавати новини для вашої церкви</p>
           </div>
         ) : (
-          <table className="table table-hover table-striped table-bordered mb-0">
-            <thead className="table-light">
+          <table className="admin-table">
+            <thead>
               <tr>
                 <th>Заголовок</th>
                 <th>Дата публікації</th>
-                <th className="text-center" style={{ width: '120px' }}>Дії</th>
+                <th style={{ width: '200px', textAlign: 'center' }}>Дії</th>
               </tr>
             </thead>
             <tbody>
               {newsList.map(news => (
                 <tr key={news.id}>
-                  <td>{news.title}</td>
+                  <td><strong>{news.title}</strong></td>
                   <td>{formatDate(news.publishDate)}</td>
-                  <td className="text-center">
-                    <button 
-                      className="btn btn-sm btn-outline-primary me-1"
-                      onClick={() => handleEdit(news)}
-                    >
-                      <i className="bi bi-pencil"></i>
-                    </button>
-                    <button 
-                      className="btn btn-sm btn-outline-danger"
-                      onClick={() => setDeleteConfirm(news.id)}
-                    >
-                      <i className="bi bi-trash"></i>
-                    </button>
+                  <td>
+                    <div className="d-flex gap-2 justify-content-center">
+                      <button 
+                        className="admin-btn admin-btn-warning admin-btn-sm"
+                        onClick={() => handleEdit(news)}
+                      >
+                        ✏️ Редагувати
+                      </button>
+                      <button 
+                        className="admin-btn admin-btn-danger admin-btn-sm"
+                        onClick={() => setDeleteConfirm(news.id)}
+                      >
+                        🗑️ Видалити
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}

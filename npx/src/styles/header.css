@@ -1,33 +1,67 @@
 .header {
-  background: white;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-  padding: 15px 50px; 
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  padding: 15px 50px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-sizing: border-box; 
+  box-sizing: border-box;
+  border-bottom: 1px solid #e0e6ed;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
-  
-  .header nav ul {
-    display: flex;
-    gap: 20px;
-  }
-  
-  .header nav ul li a {
-    text-decoration: none;
-    color: black;
-    transition: color 0.3s;
-  }
-  
-  .header nav ul li a:hover {
-    color: blue;
-  }
-  
-  .header .donate-button {
-    background: blue;
-    color: white;
-    padding: 8px 12px;
-    border-radius: 5px;
-  }
-  
+.header nav ul {
+  display: flex;
+  gap: 30px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.header nav ul li a {
+  text-decoration: none;
+  color: #2c3e50;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  position: relative;
+  padding: 8px 0;
+}
+
+.header nav ul li a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #1976d2, #1565c0);
+  transition: width 0.3s ease;
+}
+
+.header nav ul li a:hover {
+  color: #1976d2;
+}
+
+.header nav ul li a:hover::after {
+  width: 100%;
+}
+
+.header .donate-button {
+  background: linear-gradient(135deg, #1976d2, #1565c0);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+}
+
+.header .donate-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(25, 118, 210, 0.4);
+}

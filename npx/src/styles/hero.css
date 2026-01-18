@@ -1,14 +1,40 @@
 .hero {
-  height: 100vh; /* Висота на весь екран */
-  background-size: cover; /* Зображення покриває весь екран */
-  background-position: center; /* Центрує зображення */
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: multiply;
+  background-color: rgba(25, 118, 210, 0.15);
   display: flex;
   justify-content: center;
   align-items: center;
-  color: white; /* Колір тексту */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Тінь для тексту */
+  color: white;
+  text-shadow: 2px 2px 12px rgba(0, 0, 0, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(25, 118, 210, 0.3) 0%, rgba(21, 101, 192, 0.5) 100%);
+  pointer-events: none;
 }
 
 .hero h2 {
-  font-size: 3rem; /* Розмір шрифту */
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: white;
+  position: relative;
+  z-index: 1;
+  padding: 30px 60px;
+  border: 3px solid rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  background: rgba(25, 118, 210, 0.85);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+  letter-spacing: -0.02em;
 }

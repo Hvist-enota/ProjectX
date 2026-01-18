@@ -1,19 +1,47 @@
 .services-section {
-    padding: 20px;
-  }
-  
-  .services-section h2 {
-    font-size: 24px;
-    color: black;
-  }
-  
-  .services-section ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .services-section li {
-    color: gray;
-    margin: 5px 0;
-  }
+  padding: 60px 40px;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e0e6ed;
+  margin: 40px auto;
+  max-width: 1200px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.services-section h2 {
+  font-size: 2.5rem;
+  color: #2c3e50;
+  font-weight: 600;
+  margin-bottom: 30px;
+  letter-spacing: -0.02em;
+  text-align: center;
+}
+
+.services-section ul {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+}
+
+.services-section li {
+  color: #5a6c7d;
+  margin: 0;
+  padding: 25px;
+  background: #f8f9fa;
+  border: 1px solid #e0e6ed;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.services-section li:hover {
+  border-color: #1976d2;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(25, 118, 210, 0.15);
+  color: #2c3e50;
+  background: white;
+}
   

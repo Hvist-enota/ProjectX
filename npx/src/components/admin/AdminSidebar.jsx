@@ -1,13 +1,48 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import '../../styles/admin.css';
 
 export default function AdminSidebar() {
+  const location = useLocation();
+
+  const isActive = (path) => {
+    if (path === '/admin' && location.pathname === '/admin') return true;
+    if (path !== '/admin' && location.pathname.startsWith(path)) return true;
+    return false;
+  };
+
   return (
-    <nav className="bg-light p-3" style={{ width: "250px", height: "100vh" }}>
-      <h5>Адмін-панель</h5>
-      <ul className="list-unstyled">
-        <li><Link to="/admin">Головна</Link></li>
-        <li><Link to="/admin/news">Новини</Link></li>
-        <li><Link to="/admin/events">Події</Link></li>
+    <nav className="admin-sidebar">
+      <div className="admin-sidebar-header">
+        <h5 className="admin-sidebar-title">⚙️ Адмін-панель</h5>
+      </div>
+      <ul className="admin-nav">
+        <li className="admin-nav-item">
+          <Link 
+            to="/admin" 
+            className={`admin-nav-link ${isActive('/admin') ? 'active' : ''}`}
+          >
+            <span className="admin-nav-icon">🏠</span>
+            Головна
+          </Link>
+        </li>
+        <li className="admin-nav-item">
+          <Link 
+            to="/admin/news" 
+            className={`admin-nav-link ${isActive('/admin/news') ? 'active' : ''}`}
+          >
+            <span className="admin-nav-icon">📰</span>
+            Новини
+          </Link>
+        </li>
+        <li className="admin-nav-item">
+          <Link 
+            to="/admin/events" 
+            className={`admin-nav-link ${isActive('/admin/events') ? 'active' : ''}`}
+          >
+            <span className="admin-nav-icon">📅</span>
+            Події
+          </Link>
+        </li>
       </ul>
     </nav>
   );
