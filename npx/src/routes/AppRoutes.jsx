@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import AdminDashboard from "../components/admin/AdminDashboard"; // Новий імпорт
 import AdminEvents from "../components/admin/AdminEvents"; // Новий імпорт
 import AdminNews from "../components/admin/AdminNews"; // Новий імпорт
+import AdminUsers from "../components/admin/AdminUsers"; // Керування користувачами
 import Layout from "../components/layout/Layout";
 import PrivateRoute from "../components/PrivateRoute"; // Сторінка без прав доступу
 import About from "../pages/About";
@@ -16,6 +17,7 @@ import NewsPage from "../pages/NewsPage";
 import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
 import Unauthorized from "../pages/Unauthorized"; // Сторінка без прав доступу
+import UserProfile from "../pages/UserProfile"; // Профіль користувача
 
 const AppRoutes = () => {
   return (
@@ -29,6 +31,16 @@ const AppRoutes = () => {
         <Route path="/news/:id" element={<NewsDetails />} />
         <Route path="/donate" element={<Donate />} />
         
+        {/* Профіль користувача */}
+        <Route 
+          path="/profile" 
+          element={
+            <PrivateRoute allowedRoles={["Administrator", "User"]}>
+              <UserProfile />
+            </PrivateRoute>
+          } 
+        />
+        
         {/* Адмін-панель */}
         <Route 
           path="admin" 
@@ -41,6 +53,7 @@ const AppRoutes = () => {
           <Route index element={<AdminDashboard />} />
           <Route path="news" element={<AdminNews />} />
           <Route path="events" element={<AdminEvents />} />
+          <Route path="users" element={<AdminUsers />} />
         </Route>
                 <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />

@@ -1,0 +1,84 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isAdmin() {
+      return isAuthenticated() && 
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'Admin';
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    // Users collection
+    match /users/{userId} {
+      // Anyone can read user profiles
+      allow read: if true;
+      
+      // Users can create their own profile
+      allow create: if isAuthenticated() && isOwner(userId);
+      
+      // Users can update their own profile, admins can update any profile
+      allow update: if isOwner(userId) || isAdmin();
+      
+      // Only admins can delete users
+      allow delete: if isAdmin();
+    }
+    
+    // News collection
+    match /news/{newsId} {
+      // Anyone can read news
+      allow read: if true;
+      
+      // Only admins can create, update, or delete news
+      allow create, update, delete: if isAdmin();
+    }
+    
+    // Events collection
+    match /events/{eventId} {
+      // Anyone can read events
+      allow read: if true;
+      
+      // Only admins can create, update, or delete events
+      allow create, update, delete: if isAdmin();
+    }
+    
+    // About collection (church information)
+    match /about/{aboutId} {
+      // Anyone can read about information
+      allow read: if true;
+      
+      // Only admins can modify about information
+      allow create, update, delete: if isAdmin();
+    }
+    
+    // Donations collection
+    match /donations/{donationId} {
+      // Users can read their own donations, admins can read all
+      allow read: if isOwner(resource.data.userId) || isAdmin();
+      
+      // Authenticated users can create donations
+      allow create: if isAuthenticated();
+      
+      // No one can update or delete donations (audit trail)
+      allow update, delete: if false;
+    }
+    
+    // Contact messages collection
+    match /contacts/{contactId} {
+      // Anyone can create contact messages
+      allow create: if true;
+      
+      // Only admins can read, update, or delete contact messages
+      allow read, update, delete: if isAdmin();
+    }
+  }
+}
+

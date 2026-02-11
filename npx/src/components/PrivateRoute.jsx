@@ -4,7 +4,6 @@ import { AuthContext } from '../context/AuthContext';
 
 const PrivateRoute = ({ children, allowedRoles = [] }) => {
     const { user, isLoading } = useContext(AuthContext);
-    console.log(user);
     
     const location = useLocation();
 
@@ -13,7 +12,7 @@ const PrivateRoute = ({ children, allowedRoles = [] }) => {
     if (!user) {
         return <Navigate to="/signin" state={{ from: location }} replace />;
     }
-    debugger
+    
     if (allowedRoles.length > 0 && !allowedRoles.some(role => user.role?.includes(role))) {
         return <Navigate to="/unauthorized" replace />;
     }

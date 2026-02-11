@@ -43,6 +43,15 @@ export default function AdminSidebar() {
             Події
           </Link>
         </li>
+        <li className="admin-nav-item">
+          <Link 
+            to="/admin/users" 
+            className={`admin-nav-link ${isActive('/admin/users') ? 'active' : ''}`}
+          >
+            <span className="admin-nav-icon">👥</span>
+            Користувачі
+          </Link>
+        </li>
       </ul>
     </nav>
   );

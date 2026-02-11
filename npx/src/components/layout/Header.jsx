@@ -1,9 +1,14 @@
 import { Link } from "react-router-dom";
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
+import { getUserImageUrl, getUserInitials } from '../../utils/imageHelper';
+import '../../styles/avatar.css';
 
 const Header = () => {
     const { user, logout, isAuthenticated } = useContext(AuthContext);
+    
+    const imageUrl = getUserImageUrl(user);
+    const initials = getUserInitials(user?.name);
 
     return (
         <header className="bg-white shadow-sm">
@@ -48,7 +53,24 @@ const Header = () => {
                                         data-bs-toggle="dropdown"
                                         aria-expanded="false"
                                     >
-                                        <i className="bi bi-person-circle me-2"></i>
+                                        {imageUrl ? (
+                                            <img 
+                                                src={imageUrl} 
+                                                alt={user.name}
+                                                className="user-avatar avatar-sm header-avatar"
+                                                referrerPolicy="no-referrer"
+                                                crossOrigin="anonymous"
+                                                onError={(e) => {
+                                                    e.target.style.display = 'none';
+                                                    e.target.nextSibling.style.display = 'flex';
+                                                }}
+                                            />
+                                        ) : null}
+                                        {!imageUrl || imageUrl === null ? (
+                                            <div className="user-avatar-placeholder avatar-sm header-avatar">
+                                                {initials}
+                                            </div>
+                                        ) : null}
                                         <span>{user.name || 'Профіль'}</span>
                                     </a>
                                     <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">

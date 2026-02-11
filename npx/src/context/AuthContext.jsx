@@ -1,6 +1,6 @@
 // src/context/AuthContext.jsx
 import { createContext, useState, useEffect } from 'react';
-import { signIn, signUp } from '../services/authService';
+import { signIn, signUp, signInWithGoogle } from '../services/authService';
 import { jwtDecode } from 'jwt-decode';
 
 export const AuthContext = createContext();
@@ -98,6 +98,38 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
+  // Логін через Google (Firebase)
+  const loginWithGoogle = async () => {
+    try {
+      const response = await signInWithGoogle();
+
+      if (!response || typeof response !== 'string' || !response.startsWith('ey')) {
+        throw new Error('Отримано невалідний токен від сервера');
+      }
+
+      const newToken = response;
+      localStorage.setItem('token', newToken);
+      setToken(newToken);
+
+      try {
+        const decodedUser = jwtDecode(newToken);
+        setUser(decodedUser);
+      } catch (err) {
+        console.error("JWT Decode error:", err);
+        localStorage.removeItem('token');
+        setToken(null);
+        setUser(null);
+        return false;
+      }
+
+      return true;
+
+    } catch (error) {
+      console.error("Помилка Google логіну:", error);
+      return false;
+    }
+  };
+
   return (
     <AuthContext.Provider value={{
       user,
@@ -106,7 +138,8 @@ export const AuthProvider = ({ children }) => {
       isAuthenticated: !!user,
       login,
       register,
-      logout
+      logout,
+      loginWithGoogle
     }}>
       {!isLoading ? children : <div>Завантаження...</div>}
     </AuthContext.Provider>
