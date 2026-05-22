@@ -17,7 +17,7 @@ export default function UserProfile() {
   const [showEditModal, setShowEditModal] = useState(false);
   const [showImageModal, setShowImageModal] = useState(false);
   const [editForm, setEditForm] = useState({
-    userName: '',
+    name: '',
     email: ''
   });
   const [selectedImage, setSelectedImage] = useState(null);
@@ -47,7 +47,7 @@ export default function UserProfile() {
       console.log('Merged userData:', mergedData); // Debug log
       setUserData(mergedData);
       setEditForm({
-        userName: data.name || '',
+        name: data.name || '',
         email: data.email || ''
       });
       setError(null);
@@ -282,8 +282,8 @@ export default function UserProfile() {
               <Form.Label>Ім'я користувача</Form.Label>
               <Form.Control
                 type="text"
-                value={editForm.userName}
-                onChange={(e) => setEditForm({ ...editForm, userName: e.target.value })}
+                value={editForm.name}
+                onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
                 placeholder="Введіть ім'я"
                 required
               />

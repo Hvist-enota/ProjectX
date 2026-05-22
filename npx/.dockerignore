@@ -1,0 +1,16 @@
+node_modules
+dist
+.git
+.vscode
+*.log
+.DS_Store
+firebase_cred.env
+project-j-66d1f-firebase-adminsdk-fbsvc-3791ccc88f.json
+node_modules
+dist
+.git
+.vscode
+*.log
+.DS_Store
+firebase_cred.env
+project-j-66d1f-firebase-adminsdk-fbsvc-3791ccc88f.json

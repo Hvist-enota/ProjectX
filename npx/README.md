@@ -1,8 +1,79 @@
-# React + Vite
+# ProjectX
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+ProjectX — це вебзастосунок на React + Vite для церковної спільноти. У ньому є публічні сторінки, новини, події, форма контакту, пожертви, авторизація користувачів і окрема адмін-панель для керування контентом.
 
-Currently, two official plugins are available:
+## Можливості
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- головна сторінка з блоком Hero та коротким представленням спільноти;
+- сторінки «Про нас», «Події», «Новини», «Контакти» та «Пожертви»;
+- перегляд списку новин і детальної сторінки новини;
+- авторизація через email/пароль і Google Sign-In через Firebase;
+- захищений профіль користувача;
+- адмін-панель з окремими розділами для статистики, новин, подій і користувачів;
+- перевірка ролей через `PrivateRoute`;
+- інтеграція з бекендом через сервіси в `src/services`.
+
+## Технології
+
+- React 19
+- Vite
+- React Router
+- Firebase Authentication
+- Axios
+- Bootstrap / React Bootstrap
+- Tailwind CSS
+
+## Структура проєкту
+
+```text
+src/
+	api/             HTTP-клієнт і конфігурація запитів
+	components/      Повторно використовувані UI-блоки
+		admin/         Компоненти адмін-панелі
+		layout/        Header, Footer та загальний Layout
+	config/          Налаштування Firebase
+	context/         Глобальний стан авторизації
+	features/        Додаткові функції та бізнес-логіка
+	pages/           Сторінки застосунку
+	routes/          Опис маршрутів
+	services/        Робота з API та даними
+	styles/          CSS-стилі для сторінок і компонентів
+	utils/           Допоміжні утиліти
+```
+
+## Основні маршрути
+
+- `/` — головна сторінка;
+- `/about` — інформація про спільноту;
+- `/events` — сторінка подій;
+- `/newspage` — список новин;
+- `/news/:id` — деталі новини;
+- `/contact` — форма контакту;
+- `/donate` — сторінка пожертв;
+- `/signin` і `/signup` — вход та реєстрація;
+- `/profile` — профіль користувача;
+- `/admin` — адмін-панель;
+- `/unauthorized` — сторінка без доступу.
+
+## Запуск локально
+
+```bash
+npm install
+npm run dev
+```
+
+Додаткові команди:
+
+```bash
+npm run build
+npm run lint
+npm run preview
+```
+
+## Налаштування Firebase
+
+Для роботи авторизації потрібно задати змінні середовища `VITE_FIREBASE_*` у `.env` файлі. Налаштування Firebase знаходиться в [src/config/firebase.js](src/config/firebase.js).
+
+## Примітка
+
+Структура і призначення сторінок описані на основі поточного коду проєкту. Якщо з'являться нові модулі, цей файл можна доповнити відповідно до змін у `src/`.
