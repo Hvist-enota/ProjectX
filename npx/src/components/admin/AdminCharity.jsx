@@ -201,8 +201,8 @@ export default function AdminCharity() {
                 <tr key={item.id}>
                   <td>
                     <img 
-                      src={item.photoUrl ? `${apiClient.defaults.baseURL}images/charity-initiatives/${item.photoUrl}` : ''} 
-                      alt={item.title} 
+                      src={item.photoUrl ? `${apiClient.defaults.baseURL}/images/charity-initiatives/${item.photoUrl}` : ''} 
+                      alt="Ініціатива" 
                       style={{ width: '50px', height: '50px', objectFit: 'cover', borderRadius: '4px' }} 
                     />
                   </td>
@@ -312,8 +312,8 @@ export default function AdminCharity() {
               {currentPhotoUrl && (
                 <div className="mb-2">
                   <img 
-                    src={`${apiClient.defaults.baseURL}images/charity-initiatives/${currentPhotoUrl}`} 
-                    alt="Preview" 
+                    src={`${apiClient.defaults.baseURL}/images/charity-initiatives/${currentPhotoUrl}`} 
+                    alt="Поточне" 
                     style={{ maxWidth: '200px', borderRadius: '8px' }} 
                   />
                 </div>

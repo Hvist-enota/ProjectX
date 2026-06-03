@@ -62,7 +62,11 @@ export default function UserProfile() {
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     try {
-      await userService.updateUser(user.id, editForm);
+      const payload = {
+        userName: editForm.name,
+        email: editForm.email
+      };
+      await userService.updateUser(user.id, payload);
       setSuccess('Профіль успішно оновлено!');
       setShowEditModal(false);
       await loadUserData();
@@ -325,7 +329,7 @@ export default function UserProfile() {
                 </div>
               ) : userData.image?.filePath ? (
                 <div className="image-preview">
-                  <img src={userData.image.filePath} alt="Current" />
+                  <img src={getUserImageUrl(userData.image.filePath)} alt="Current" />
                 </div>
               ) : (
                 <div className="image-placeholder">

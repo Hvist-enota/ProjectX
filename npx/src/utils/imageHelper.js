@@ -9,9 +9,17 @@
 export const getUserImageUrl = (userData, baseUrl = null) => {
   // Якщо передано об'єкт користувача
   if (typeof userData === 'object' && userData !== null) {
-    // Пріоритет: photoUrl (Google) -> image (локальний файл)
-    const imagePath = userData.photoUrl || userData.image;
+    // Пріоритет: photoUrl (Google) -> image.filePath (локальний файл) -> image (рядок)
+    let imagePath = userData.photoUrl;
     
+    // Якщо photoUrl порожній або "N/A", пробуємо взяти локальне зображення
+    if (!imagePath || imagePath === 'N/A') {
+      if (userData.image) {
+        imagePath = typeof userData.image === 'object' ? userData.image.filePath : userData.image;
+      }
+    }
+    
+    // Якщо і після цього нічого немає або знову "N/A"
     if (!imagePath || imagePath === 'N/A') {
       return null;
     }
@@ -23,8 +31,9 @@ export const getUserImageUrl = (userData, baseUrl = null) => {
     
     // Локальний файл
     const apiUrl = baseUrl || import.meta.env.VITE_API_URL || 'http://localhost:5132';
-    const cleanPath = imagePath.replace(/^\/images\//, '');
-    return `${apiUrl}/images/${cleanPath}`;
+    // Додаємо шлях до папки userImages
+    const cleanPath = imagePath.replace(/^\/images\/userImages\//, '').replace(/^\/images\//, '');
+    return `${apiUrl}/images/userImages/${cleanPath}`;
   }
   
   // Якщо передано просто шлях (string)
@@ -41,8 +50,8 @@ export const getUserImageUrl = (userData, baseUrl = null) => {
 
   // Локальний файл
   const apiUrl = baseUrl || import.meta.env.VITE_API_URL || 'http://localhost:5132';
-  const cleanPath = imagePath.replace(/^\/images\//, '');
-  return `${apiUrl}/images/${cleanPath}`;
+  const cleanPath = imagePath.replace(/^\/images\/userImages\//, '').replace(/^\/images\//, '');
+  return `${apiUrl}/images/userImages/${cleanPath}`;
 };
 
 /**

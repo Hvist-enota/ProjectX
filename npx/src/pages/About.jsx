@@ -16,8 +16,8 @@ export default function About() {
       <div className="row">
         {images.map(img => (
           <div key={img.id} className="col-12 col-sm-4 col-md-3 mb-3">
-            <div className="card">
-              <img src={apiClient.defaults.baseURL + "images/aboutUsImages/" + img?.filePath} className="card-img-top img-fluid" alt={img.name} />
+            <div className="card shadow-sm h-100 border-0">
+              <img src={`${apiClient.defaults.baseURL}/images/aboutUsImages/${img?.filePath}`} className="card-img-top img-fluid" alt={img.name} />
               <div className="card-body text-center">
                 <p className="card-text">{img.name}</p>
                 <p className="card-text">{img.description}</p>

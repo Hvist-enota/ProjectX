@@ -135,7 +135,7 @@ export default function AdminUsers() {
                     <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                       {user.image?.filePath ? (
                         <img 
-                          src={user.image.filePath} 
+                          src={`${apiClient.defaults.baseURL}/images/userImages/${user.image.filePath}`} 
                           alt={user.name}
                           style={{
                             width: '40px',
