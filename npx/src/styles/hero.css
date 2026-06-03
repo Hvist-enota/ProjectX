@@ -1,14 +1,12 @@
 .hero {
-  height: 100vh;
+  height: 90vh; /* Slightly smaller than full viewport for better flow */
   background-size: cover;
   background-position: center;
   background-blend-mode: multiply;
-  background-color: rgba(25, 118, 210, 0.15);
+  background-color: rgba(30, 30, 30, 0.5); /* Rich overlay */
   display: flex;
   justify-content: center;
   align-items: center;
-  color: white;
-  text-shadow: 2px 2px 12px rgba(0, 0, 0, 0.4);
   position: relative;
   overflow: hidden;
 }
@@ -20,21 +18,83 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, rgba(25, 118, 210, 0.3) 0%, rgba(21, 101, 192, 0.5) 100%);
+  background: linear-gradient(180deg, rgba(30, 30, 30, 0.1) 0%, rgba(15, 15, 15, 0.8) 100%);
   pointer-events: none;
 }
 
-.hero h2 {
-  font-size: 3.5rem;
-  font-weight: 700;
-  color: white;
+.hero-content {
   position: relative;
   z-index: 1;
-  padding: 30px 60px;
-  border: 3px solid rgba(255, 255, 255, 0.9);
-  border-radius: 12px;
-  background: rgba(25, 118, 210, 0.85);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
-  letter-spacing: -0.02em;
+  text-align: center;
+  max-width: 900px;
+  padding: 0 20px;
+  color: white;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+}
+
+.hero-eyebrow {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--primary-accent);
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.hero-content h2 {
+  font-family: var(--font-heading);
+  font-size: 4.5rem;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 25px;
+  letter-spacing: 0.02em;
+  line-height: 1.15;
+}
+
+.hero-subtitle {
+  font-family: var(--font-body);
+  font-size: 1.25rem;
+  font-weight: 300;
+  line-height: 1.7;
+  max-width: 700px;
+  margin: 0 auto 40px auto;
+  opacity: 0.9;
+}
+
+.hero-actions {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.btn-outline-light {
+  background: transparent !important;
+  border: 1px solid white !important;
+  color: white !important;
+  box-shadow: none !important;
+}
+
+.btn-outline-light:hover {
+  background: white !important;
+  color: var(--text-primary) !important;
+  border-color: white !important;
+}
+
+@media (max-width: 768px) {
+  .hero-content h2 {
+    font-size: 3rem;
+  }
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+  .hero-actions {
+    flex-direction: column;
+    gap: 15px;
+  }
+  .hero-actions .btn {
+    width: 100%;
+    margin-left: 0 !important;
+  }
 }

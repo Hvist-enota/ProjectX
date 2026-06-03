@@ -1,49 +1,65 @@
 .donate-section {
-  padding: 60px 40px;
+  padding: 80px 40px;
   text-align: center;
-  background: white;
-  border-radius: 12px;
-  border: 1px solid #e0e6ed;
-  margin: 40px auto;
+  background: var(--secondary-bg);
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  margin: 60px auto;
   max-width: 1200px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--card-shadow);
+  position: relative;
+}
+
+.donate-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background-color: var(--primary-accent);
+  border-radius: 0 0 4px 4px;
 }
 
 .donate-button {
-  background: linear-gradient(135deg, #4caf50, #43a047);
+  background: var(--primary-accent);
   color: white;
-  padding: 15px 40px;
-  border-radius: 8px;
+  padding: 16px 48px;
+  border-radius: 4px;
   cursor: pointer;
   border: none;
-  font-weight: 600;
+  font-family: var(--font-body);
+  font-weight: 500;
   font-size: 1.1rem;
+  letter-spacing: 0.03em;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+  box-shadow: 0 4px 12px rgba(184, 144, 83, 0.2);
 }
 
 .donate-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(76, 175, 80, 0.4);
+  background: var(--secondary-accent);
+  box-shadow: 0 6px 16px rgba(184, 144, 83, 0.3);
 }
 
 .initiatives-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 30px;
-  margin-top: 40px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 40px;
+  margin-top: 50px;
 }
 
 .initiative-card {
-  background: #ffffff;
-  border: 1px solid #e0e6ed;
-  border-radius: 16px;
+  background: var(--secondary-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
   padding: 0;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s ease;
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  box-shadow: var(--card-shadow);
   position: relative;
   overflow: hidden;
 }
@@ -51,88 +67,86 @@
 .initiative-card::before {
   content: "";
   position: absolute;
-  top: 0; left: 0; width: 100%; height: 4px;
-  background: linear-gradient(135deg, #4caf50, #2196f3);
+  top: 0; left: 0; width: 100%; height: 3px;
+  background: var(--primary-accent);
   transform: scaleX(0);
-  transition: transform 0.3s ease;
-  transform-origin: left;
+  transition: transform 0.4s ease;
+  transform-origin: center;
+  z-index: 2;
 }
 
 .initiative-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
-  border-color: transparent;
+  transform: translateY(-4px);
+  box-shadow: var(--hover-shadow);
 }
 
 .initiative-card:hover::before {
   transform: scaleX(1);
 }
 
-.initiative-icon {
-  font-size: 2.5rem;
-  margin-bottom: 20px;
-  background: linear-gradient(135deg, #e8f5e9, #e3f2fd);
-  width: 70px;
-  height: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-}
-
 .initiative-card h3 {
-  font-size: 1.25rem;
-  font-weight: 700;
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 600;
   margin-bottom: 12px;
-  color: #1e293b;
+  color: var(--text-primary);
 }
 
 .initiative-card p {
-  color: #64748b;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
   font-size: 0.95rem;
-  line-height: 1.5;
+  line-height: 1.6;
   flex-grow: 1;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .donate-button-small {
-  background: linear-gradient(135deg, #4caf50, #43a047);
+  background: var(--primary-accent);
   color: white;
-  padding: 10px 24px;
-  border-radius: 8px;
+  padding: 12px 24px;
+  border-radius: 4px;
   cursor: pointer;
   border: none;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 1rem;
   transition: all 0.3s ease;
   width: 100%;
 }
 
-.initiative-card:hover .donate-button-small {
-  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+.donate-button-small:hover {
+  background: var(--secondary-accent);
 }
 
 .initiative-image-container {
   width: 100%;
-  height: 200px;
+  height: 220px;
   overflow: hidden;
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
+  border-radius: 4px 4px 0 0;
+  position: relative;
+}
+
+.initiative-image-container::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(184, 144, 83, 0.05); /* very subtle gold overlay */
+  pointer-events: none;
 }
 
 .initiative-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
+  transition: transform 0.6s ease;
 }
 
 .initiative-card:hover .initiative-image {
-  transform: scale(1.05);
+  transform: scale(1.03);
 }
 
 .initiative-content {
-  padding: 24px;
+  padding: 30px;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -143,15 +157,19 @@
 }
 
 .donate-submit-btn {
-  background: linear-gradient(135deg, #4caf50, #43a047) !important;
+  background: var(--primary-accent) !important;
   border: none !important;
-  font-weight: 600 !important;
+  font-weight: 500 !important;
   padding: 12px !important;
+  border-radius: 4px !important;
   transition: all 0.3s ease !important;
 }
 
 .donate-submit-btn:hover {
-  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4) !important;
+  background: var(--secondary-accent) !important;
   transform: translateY(-1px);
 }
-  
+.donate-wrapper { background-color: var(--primary-bg); min-height: 100vh; } 
+.donate-header-banner { padding: 80px 0 20px; background-color: var(--primary-bg); } 
+.donate-page-title { font-family: var(--font-heading); font-size: 3.5rem; color: var(--text-primary); font-weight: 600; margin-bottom: 20px; letter-spacing: 0.01em; } 
+.donate-page-subtitle { color: var(--text-secondary); font-family: var(--font-body); font-size: 1.15rem; line-height: 1.8; margin-bottom: 0; }

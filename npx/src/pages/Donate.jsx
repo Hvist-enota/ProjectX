@@ -75,21 +75,37 @@ const Donate = () => {
   };
 
   return (
-    <section className="donate-section">
-      <h2 className="mb-4 text-center">Оберіть ініціативу для підтримки</h2>
-      
-      {loading ? (
-        <div className="text-center my-5">
-          <div className="spinner-border text-primary" role="status">
-            <span className="visually-hidden">Завантаження...</span>
+    <div className="donate-wrapper">
+      <div className="donate-header-banner">
+        <div className="container">
+          <div className="row justify-content-center text-center">
+            <div className="col-lg-8">
+              <span className="section-eyebrow">Служіння та Підтримка</span>
+              <h1 className="donate-page-title">Дар любові</h1>
+              <p className="donate-page-subtitle">
+                "Кожен нехай дає за велінням серця, не з жалем чи з примусу, бо Бог любить того, хто дає з радістю" (2 Кор. 9:7). 
+                Ваша підтримка допомагає нам нести світло, надію та практичну допомогу тим, хто цього найбільше потребує.
+              </p>
+            </div>
           </div>
         </div>
-      ) : initiatives.length === 0 ? (
-        <div className="text-center my-5">
-          <h4>Наразі немає активних ініціатив</h4>
-        </div>
-      ) : (
-        <div className="initiatives-grid">
+      </div>
+
+      <section className="donate-section">
+        <h2 className="mb-5 text-center">Активні Ініціативи</h2>
+        
+        {loading ? (
+          <div className="text-center my-5">
+            <div className="spinner-border text-primary" role="status">
+              <span className="visually-hidden">Завантаження...</span>
+            </div>
+          </div>
+        ) : initiatives.length === 0 ? (
+          <div className="text-center my-5">
+            <h4 className="text-muted">Наразі немає активних ініціатив</h4>
+          </div>
+        ) : (
+          <div className="initiatives-grid">
           {initiatives.map((item) => (
             <div key={item.id} className="initiative-card" onClick={() => handleOpen(item)}>
               {item.photoUrl ? (
@@ -225,7 +241,8 @@ const Donate = () => {
           </Form>
         </Modal.Body>
       </Modal>
-    </section>
+      </section>
+    </div>
   );
 };
 

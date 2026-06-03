@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import * as userService from '../../services/userService';
 import { Modal, Button, Form } from 'react-bootstrap';
 import '../../styles/admin.css';
+import apiClient from '../../api/axiosConfig';
 
 export default function AdminUsers() {
   const [users, setUsers] = useState([]);

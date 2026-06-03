@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { getAllNews } from "../services/newsService";
+import "../styles/news.css";
 
 const NewsPage = () => {
   const [newsList, setNewsList] = useState([]);
@@ -32,39 +34,92 @@ const NewsPage = () => {
     return <div className="text-center text-danger mt-5">{error}</div>;
   }
 
+  // Separate first featured news from the rest
+  const featuredNews = newsList.length > 0 ? newsList[0] : null;
+  const regularNews = newsList.length > 1 ? newsList.slice(1) : [];
+
   return (
-    <div className="container mt-5">
-      <h2 className="mb-4">Останні новини</h2>
-      {newsList.length > 0 ? (
-        <div className="row">
-          {newsList.map((news) => (
-            <div className="col-md-4 mb-4" key={news.id}>
-              <div className="card h-100 shadow-sm">
-                {/* Якщо є зображення */}
-                {news.filePath && (
-                  <img 
-                    src={news.filePath} 
-                    alt={news.title || 'Новина'} 
-                    className="card-img-top"
-                    style={{ height: "200px", objectFit: "cover" }}
-                  />
-                )}
-                <div className="card-body d-flex flex-column">
-                  <h5 className="card-title">{news.title}</h5>
-                  <p className="card-text text-muted">
-                    <small>Дата публікації: {new Date(news.publishDate).toLocaleDateString()}</small>
-                  </p>
-                  <p className="card-text flex-grow-1">{news.content.substring(0, 150)}{news.content.length > 150 ? "..." : ""}</p>
-                  {/* Детальніше */}
-                  <a href={`/news/${news.id}`} className="btn btn-primary mt-3">Детальніше</a>
+    <div className="news-wrapper">
+      <div className="news-header">
+        <div className="container text-center">
+          <span className="section-eyebrow">Останні Події</span>
+          <h1 className="news-page-title">Життя нашої церкви</h1>
+          <p className="news-page-subtitle">Дізнавайтесь про останні новини, служіння та важливі події в нашій спільноті.</p>
+        </div>
+      </div>
+
+      <div className="container pb-5">
+        {newsList.length > 0 ? (
+          <>
+            {/* Featured News Article */}
+            {featuredNews && (
+              <div className="featured-news-card mb-5">
+                <div className="row g-0">
+                  <div className="col-lg-5">
+                    <div className="featured-news-content">
+                      <span className="news-date">{new Date(featuredNews.publishDate).toLocaleDateString()}</span>
+                      <h2 className="featured-news-title">{featuredNews.title}</h2>
+                      <p className="featured-news-text">
+                        {featuredNews.content.substring(0, 250)}
+                        {featuredNews.content.length > 250 ? "..." : ""}
+                      </p>
+                      <Link to={`/news/${featuredNews.id}`} className="btn btn-outline-primary mt-4">
+                        Читати статтю
+                      </Link>
+                    </div>
+                  </div>
+                  {featuredNews.filePath && (
+                    <div className="col-lg-7">
+                      <div className="featured-news-image-wrapper">
+                        <img 
+                          src={featuredNews.filePath} 
+                          alt={featuredNews.title} 
+                          className="featured-news-image"
+                        />
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div className="alert alert-info text-center">Наразі немає новин.</div>
-      )}
+            )}
+
+            {/* Regular News Grid */}
+            {regularNews.length > 0 && (
+              <div className="row g-4">
+                {regularNews.map((news) => (
+                  <div className="col-md-6 col-lg-4" key={news.id}>
+                    <div className="news-card">
+                      {news.filePath && (
+                        <div className="news-image-wrapper">
+                          <img 
+                            src={news.filePath} 
+                            alt={news.title} 
+                            className="news-image"
+                          />
+                        </div>
+                      )}
+                      <div className="news-content">
+                        <span className="news-date">{new Date(news.publishDate).toLocaleDateString()}</span>
+                        <h3 className="news-title">{news.title}</h3>
+                        <p className="news-text">
+                          {news.content.substring(0, 120)}{news.content.length > 120 ? "..." : ""}
+                        </p>
+                        <Link to={`/news/${news.id}`} className="news-read-more">
+                          Детальніше <i className="bi bi-arrow-right"></i>
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </>
+        ) : (
+          <div className="alert alert-info text-center py-5">
+            <h4 className="alert-heading mb-0">Наразі немає новин.</h4>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
