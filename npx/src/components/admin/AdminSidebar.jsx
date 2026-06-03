@@ -54,6 +54,15 @@ export default function AdminSidebar() {
         </li>
         <li className="admin-nav-item">
           <Link 
+            to="/admin/charity" 
+            className={`admin-nav-link ${isActive('/admin/charity') ? 'active' : ''}`}
+          >
+            <span className="admin-nav-icon">❤️</span>
+            Благодійність
+          </Link>
+        </li>
+        <li className="admin-nav-item">
+          <Link 
             to="/admin/users" 
             className={`admin-nav-link ${isActive('/admin/users') ? 'active' : ''}`}
           >

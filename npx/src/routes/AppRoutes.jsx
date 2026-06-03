@@ -1,9 +1,10 @@
 // src/routes/AppRoutes.jsx
 import { Route, Routes } from "react-router-dom";
 import AdminDashboard from "../components/admin/AdminDashboard"; // Новий імпорт
-import AdminEvents from "../components/admin/AdminEvents"; // Новий імпорт
-import AdminNews from "../components/admin/AdminNews"; // Новий імпорт
-import AdminStatistics from "../components/admin/AdminStatistics"; // Статистика
+import AdminEvents from "../components/admin/AdminEvents";
+import AdminCharity from "../components/admin/AdminCharity";
+import AdminNews from "../components/admin/AdminNews";
+import AdminStatistics from "../components/admin/AdminStatistics";
 import AdminUsers from "../components/admin/AdminUsers"; // Керування користувачами
 import Layout from "../components/layout/Layout";
 import PrivateRoute from "../components/PrivateRoute"; // Сторінка без прав доступу
@@ -55,6 +56,7 @@ const AppRoutes = () => {
           <Route path="statistics" element={<AdminStatistics />} />
           <Route path="news" element={<AdminNews />} />
           <Route path="events" element={<AdminEvents />} />
+          <Route path="charity" element={<AdminCharity />} />
           <Route path="users" element={<AdminUsers />} />
         </Route>
                 <Route path="/signin" element={<SignIn />} />
