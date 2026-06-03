@@ -1,8 +1,9 @@
 import { useState, useContext } from 'react';
 import { signUp } from '../services/authService';
 import { Link, useNavigate } from 'react-router-dom';
-import { Alert } from 'react-bootstrap';
+import { Alert, Button } from 'react-bootstrap';
 import { AuthContext } from '../context/AuthContext';
+import '../styles/auth.css';
 
 export default function SignUp() {
   const [name, setName] = useState('');
@@ -26,11 +27,10 @@ export default function SignUp() {
     setLoading(true);
 
     try {
-      const result = await signUp(email, password, name);
-      localStorage.setItem('token', result.token);
+      await signUp(email, password, name);
       navigate('/signin');
     } catch {
-      setError('Не вдалося зареєструватись');
+      setError('Не вдалося зареєструватись. Можливо, користувач з таким email вже існує.');
     } finally {
       setLoading(false);
     }
@@ -56,12 +56,12 @@ export default function SignUp() {
   };
 
   return (
-    <div className="container py-4 d-flex justify-content-center align-items-center min-vh-100">
-      <div className="card shadow-sm w-100" style={{ maxWidth: '450px' }}>
-        <div className="card-header bg-warning text-dark text-center py-3">
-          <h5 className="mb-0">Реєстрація нового акаунта</h5>
+    <div className="auth-container">
+      <div className="auth-card">
+        <div className="auth-header">
+          <h3>Створення акаунта</h3>
         </div>
-        <div className="card-body p-3">
+        <div className="auth-body">
           {error && <Alert variant="danger">{error}</Alert>}
           <form onSubmit={handleSubmit}>
             <div className="form-floating mb-3">
@@ -104,53 +104,36 @@ export default function SignUp() {
               <input
                 type="password"
                 className="form-control"
-                id="floatingConfirm"
-                placeholder="Підтвердження пароля"
+                id="floatingConfirmPassword"
+                placeholder="Підтвердіть пароль"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
               />
-              <label htmlFor="floatingConfirm">Підтвердження пароля</label>
+              <label htmlFor="floatingConfirmPassword">Підтвердіть пароль</label>
             </div>
             <div className="d-grid mb-3">
-              <button type="submit" className="btn btn-outline-warning" disabled={loading}>
-                {loading && (
-                  <span className="spinner-border spinner-border-sm me-2" role="status" />
+              <Button type="submit" className="auth-btn auth-btn-primary" disabled={loading}>
+                {loading ? (
+                  <span className="spinner-border spinner-border-sm" role="status" />
+                ) : (
+                  'Зареєструватись'
                 )}
-                Зареєструватись
-              </button>
+              </Button>
             </div>
           </form>
-
-          <div className="text-center mb-3">
-            <div className="d-flex align-items-center">
-              <hr className="flex-grow-1" />
-              <span className="px-3 text-muted">або</span>
-              <hr className="flex-grow-1" />
-            </div>
-          </div>
+          
+          <div className="auth-divider">або</div>
 
           <div className="d-grid mb-3">
-            <button 
-              type="button" 
-              className="btn btn-outline-danger d-flex align-items-center justify-content-center gap-2"
-              onClick={handleGoogleSignIn}
-              disabled={loading}
-            >
-              <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
-                <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
-                <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
-                <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
-                <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
-              </svg>
-              {loading ? 'Завантаження...' : 'Увійти через Google'}
-            </button>
+            <Button onClick={handleGoogleSignIn} className="auth-btn auth-btn-google" disabled={loading}>
+              <img src="https://img.icons8.com/color/16/000000/google-logo.png" alt="Google" className="me-2"/>
+              Продовжити з Google
+            </Button>
           </div>
 
-          <div className="text-center">
-            <small>
-              Вже зареєстровані? <Link to="/signin" className="text-decoration-none">Увійти</Link>
-            </small>
+          <div className="auth-footer">
+            <p>Вже маєте акаунт? <Link to="/signin">Увійдіть</Link></p>
           </div>
         </div>
       </div>

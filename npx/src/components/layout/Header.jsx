@@ -92,10 +92,10 @@ const Header = () => {
                             ) : (
                                 <>
                                     <li className="nav-item me-2">
-                                        <Link className="btn btn-outline-primary btn-sm" to="/signin">Увійти</Link>
+                                        <Link className="btn btn-primary btn-sm" to="/signin">Увійти</Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link className="btn btn-primary btn-sm text-white" to="/signup">Реєстрація</Link>
+                                        <Link className="btn btn-primary btn-sm" to="/signup">Реєстрація</Link>
                                     </li>
                                 </>
                             )}
