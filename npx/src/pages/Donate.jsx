@@ -21,7 +21,6 @@ const Donate = () => {
     setLoading(true);
     try {
       const data = await charityService.getAllCharityInitiatives();
-      // Фільтруємо лише активні
       setInitiatives(data.filter(item => item.isActive));
     } catch (error) {
       console.error("Помилка завантаження ініціатив:", error);
@@ -57,7 +56,6 @@ const Donate = () => {
       alert("Будь ласка, заповніть всі поля");
       return;
     }
-    // Basic format validation
     if (cardNumber.replace(/\s/g, '').length !== 16) {
       alert("Номер картки має містити 16 цифр");
       return;
@@ -67,7 +65,7 @@ const Donate = () => {
       await charityService.donateToCharityInitiative(selectedInitiative.id, parseFloat(amount));
       alert(`Дякуємо, ${firstName} ${lastName}! Ваша пожертва у розмірі ${amount} ₴ на "${selectedInitiative.title}" успішно прийнята.`);
       handleClose();
-      fetchInitiatives(); // Refresh the list to show updated amounts/remove inactive
+      fetchInitiatives();
     } catch (error) {
       console.error("Помилка при пожертві:", error);
       alert("Сталася помилка при обробці пожертви. Спробуйте пізніше.");
@@ -90,6 +88,32 @@ const Donate = () => {
           </div>
         </div>
       </div>
+
+      {/* Impact Dashboard */}
+      <section className="impact-dashboard">
+        <div className="container">
+          <div className="row g-4 text-center">
+            <div className="col-md-4">
+              <div className="impact-stat-card">
+                <div className="impact-number">540+</div>
+                <div className="impact-label">Роздано продуктових наборів</div>
+              </div>
+            </div>
+            <div className="col-md-4">
+              <div className="impact-stat-card">
+                <div className="impact-number">150K</div>
+                <div className="impact-label">Зібрано на потреби (грн)</div>
+              </div>
+            </div>
+            <div className="col-md-4">
+              <div className="impact-stat-card">
+                <div className="impact-number">45</div>
+                <div className="impact-label">Родин отримали допомогу</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <section className="donate-section">
         <h2 className="mb-5 text-center">Активні Ініціативи</h2>
@@ -135,8 +159,8 @@ const Donate = () => {
               </div>
             </div>
           ))}
-        </div>
-      )}
+          </div>
+        )}
 
       <Modal show={showModal} onHide={handleClose} centered>
         <Modal.Header closeButton>

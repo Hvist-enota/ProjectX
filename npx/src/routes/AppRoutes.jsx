@@ -14,6 +14,7 @@ import Contact from "../pages/Contact";
 import Donate from "../pages/Donate";
 import EventsPage from "../pages/EventsPage";
 import Home from "../pages/Home";
+import NewHere from "../pages/NewHere";
 import NewsDetails from "../pages/NewsDetails";
 import NewsPage from "../pages/NewsPage";
 import SignIn from "../pages/SignIn";
@@ -26,6 +27,7 @@ const AppRoutes = () => {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
+        <Route path="/new-here" element={<NewHere />} />
         <Route path="/about" element={<About />} />
         <Route path="/events" element={<EventsPage />} />
         <Route path="/contact" element={<Contact />} />

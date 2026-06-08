@@ -27,7 +27,8 @@ const Home = () => {
               <p className="section-text mb-4">
                 Незалежно від того, на якому етапі духовного шляху ви знаходитесь, тут для вас завжди знайдеться місце.
               </p>
-              <Link to="/about" className="btn btn-primary">Про нашу історію</Link>
+              <Link to="/new-here" className="btn btn-primary me-3">Я тут вперше</Link>
+              <Link to="/about" className="btn btn-outline-secondary">Про нашу історію</Link>
             </div>
           </div>
         </div>

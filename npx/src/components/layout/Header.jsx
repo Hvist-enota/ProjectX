@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { getUserImageUrl, getUserInitials } from '../../utils/imageHelper';
 import '../../styles/avatar.css';
+import '../../styles/header.css';
 
 const Header = () => {
     const { user, logout, isAuthenticated } = useContext(AuthContext);
@@ -11,7 +12,7 @@ const Header = () => {
     const initials = getUserInitials(user?.name);
 
     return (
-        <header className="bg-white shadow-sm">
+        <header className="main-header">
             <div className="container py-3">
                 <nav className="navbar navbar-expand-lg navbar-light p-0">
                     {/* Логотип */}

@@ -173,3 +173,12 @@
 .donate-header-banner { padding: 80px 0 20px; background-color: var(--primary-bg); } 
 .donate-page-title { font-family: var(--font-heading); font-size: 3.5rem; color: var(--text-primary); font-weight: 600; margin-bottom: 20px; letter-spacing: 0.01em; } 
 .donate-page-subtitle { color: var(--text-secondary); font-family: var(--font-body); font-size: 1.15rem; line-height: 1.8; margin-bottom: 0; }
+
+.donate-wrapper { background-color: var(--primary-bg); min-height: 100vh; }
+.donate-header-banner { padding: 80px 0 20px; background-color: var(--primary-bg); }
+.donate-page-title { font-family: var(--font-heading); font-size: 3.5rem; color: var(--text-primary); font-weight: 600; margin-bottom: 20px; letter-spacing: 0.01em; }
+.donate-page-subtitle { color: var(--text-secondary); font-family: var(--font-body); font-size: 1.15rem; line-height: 1.8; margin-bottom: 0; }
+.impact-dashboard { padding: 40px 0; background-color: var(--secondary-bg); border-bottom: 1px solid var(--border-color); }
+.impact-stat-card { padding: 30px; text-align: center; }
+.impact-number { font-family: var(--font-heading); font-size: 3.5rem; font-weight: 700; color: var(--primary-accent); margin-bottom: 10px; line-height: 1; }
+.impact-label { font-family: var(--font-body); font-size: 1.1rem; color: var(--text-primary); font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }

@@ -1,103 +1,63 @@
-.header {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05); /* Very subtle line */
-  padding: 1.25rem 2rem;
+/* ==================================================
+   HEADER / NAVBAR THEME
+================================================== */
+.main-header {
+  background-color: var(--primary-bg);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid var(--border-color);
   position: sticky;
   top: 0;
-  z-index: 1020;
-}
-
-.navbar-brand {
-  font-family: var(--font-heading);
-  font-weight: 700;
-  font-size: 1.85rem;
-  color: var(--text-primary) !important;
-}
-
-.nav-link {
-  font-family: var(--font-body);
-  font-weight: 500;
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
-  padding: 0.5rem 1rem;
-  text-transform: uppercase;
-  font-size: 0.9rem;
-  letter-spacing: 0.05em;
-}
-
-.nav-link:hover,
-.nav-link.active {
-  color: var(--primary-accent);
-}
-
-.header-avatar {
-  width: 40px;
-  height: 40px;
-  margin-right: 10px;
-}
-
-.user-avatar-placeholder.header-avatar {
-  width: 40px;
-  height: 40px;
-  font-size: 1rem;
-}
-
-.dropdown-menu {
-  border-radius: 4px;
-  box-shadow: var(--card-shadow);
-  border: 1px solid var(--border-color);
-  padding: 0.5rem 0;
-}
-
-.dropdown-item {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.6rem 1.25rem;
-  font-weight: 500;
-  color: var(--text-primary);
-  font-size: 0.95rem;
-}
-
-.dropdown-item:hover {
-  background-color: var(--accent-bg);
-  color: var(--primary-accent);
-}
-
-.dropdown-item:active {
-  background-color: var(--border-color);
-}
-
-.header .btn-sm {
-  font-weight: 600;
-  padding: 0.5rem 1.25rem;
-  border-radius: 4px;
+  z-index: 1030; /* Bootstrap standard for fixed/sticky navbar */
   transition: all 0.3s ease;
-  font-size: 0.9rem;
-  letter-spacing: 0.03em;
 }
 
-.header .btn-outline-primary {
-  color: var(--primary-accent);
-  border: 1px solid var(--primary-accent);
-  background: transparent;
+.main-header .navbar-brand {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--primary-accent) !important;
+  letter-spacing: -0.02em;
 }
 
-.header .btn-outline-primary:hover {
+.main-header .nav-link {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--text-primary) !important;
+  margin: 0 5px;
+  padding: 10px 15px !important;
+  transition: color 0.3s ease;
+  position: relative;
+}
+
+.main-header .nav-link:hover,
+.main-header .nav-link:focus,
+.main-header .nav-item.active .nav-link {
+  color: var(--primary-accent) !important;
+}
+
+/* Subtle underline animation on hover */
+.main-header .nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 15px; /* match padding */
+  right: 15px;
+  height: 2px;
   background-color: var(--primary-accent);
-  color: white;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+  transform-origin: center;
 }
 
-.header .btn-primary {
-  background-color: var(--primary-accent);
-  border: none;
-  color: white;
-  box-shadow: none;
+.main-header .nav-link:hover::after {
+  transform: scaleX(1);
 }
 
-.header .btn-primary:hover {
-  background-color: var(--secondary-accent);
-  transform: translateY(-1px);
+.main-header .btn-primary {
+  padding: 8px 24px;
+  border-radius: 4px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  letter-spacing: 0.02em;
 }
-
