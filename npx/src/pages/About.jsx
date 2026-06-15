@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { getAboutImages } from '../services/aboutService';
 import apiClient from "../api/axiosConfig";
 import "../styles/about.css";
@@ -27,6 +28,9 @@ export default function About() {
               <blockquote className="about-quote">
                 "Ми - сім'я, в якій кожен має своє місце, незалежно від минулого."
               </blockquote>
+              <div className="mt-4">
+                <Link to="/new-here" className="btn btn-primary btn-lg">Я тут вперше</Link>
+              </div>
             </div>
             <div className="col-lg-6 offset-lg-1">
               <div className="about-image-grid">

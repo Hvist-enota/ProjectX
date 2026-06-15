@@ -1,21 +1,37 @@
-# syntax=docker/dockerfile:1
+# ==========================================
+# Етап 1: Збірка проекту
+# ==========================================
+FROM node:24-alpine AS builder
 
-FROM node:24-alpine AS deps
 WORKDIR /app
-COPY package.json package-lock.json* pnpm-lock.yaml* yarn.lock* ./
-RUN if [ -f package-lock.json ]; then npm ci; \
-    elif [ -f pnpm-lock.yaml ]; then corepack enable && pnpm i --frozen-lockfile; \
-    elif [ -f yarn.lock ]; then corepack enable && yarn --frozen-lockfile; \
-    else npm i; fi
+COPY package*.json ./
+RUN npm ci
 
-FROM node:24-alpine AS build
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+
+# Вказуємо тимчасові плейсхолдери для Vite
+ENV VITE_FIREBASE_API_KEY=__VITE_FIREBASE_API_KEY_PLACEHOLDER__
+ENV VITE_FIREBASE_AUTH_DOMAIN=__VITE_FIREBASE_AUTH_DOMAIN_PLACEHOLDER__
+ENV VITE_FIREBASE_PROJECT_ID=__VITE_FIREBASE_PROJECT_ID_PLACEHOLDER__
+ENV VITE_FIREBASE_STORAGE_BUCKET=__VITE_FIREBASE_STORAGE_BUCKET_PLACEHOLDER__
+ENV VITE_FIREBASE_MESSAGING_SENDER_ID=__VITE_FIREBASE_MESSAGING_SENDER_ID_PLACEHOLDER__
+ENV VITE_FIREBASE_APP_ID=__VITE_FIREBASE_APP_ID_PLACEHOLDER__
+ENV VITE_API_URL=__VITE_API_URL_PLACEHOLDER__
+
+# Vite "запече" ці плейсхолдери у фінальні файли
 RUN npm run build
 
-FROM nginx:1.27-alpine AS runtime
+# ==========================================
+# Етап 2: Продакшен сервер
+# ==========================================
+FROM nginx:alpine
+
+COPY --from=builder /app/dist /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=build /app/dist /usr/share/nginx/html
+
+# Копіюємо наш скрипт підміни і робимо його виконуваним
+COPY replace-env.sh /docker-entrypoint.d/40-replace-env.sh
+RUN chmod +x /docker-entrypoint.d/40-replace-env.sh
+
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]

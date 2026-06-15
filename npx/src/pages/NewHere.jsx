@@ -114,19 +114,6 @@ const NewHere = () => {
         </div>
       </section>
 
-      {/* Call to Action */}
-      <section className="newhere-cta py-5 text-center">
-        <div className="container">
-          <h2 className="section-heading">Ми чекаємо на вас цієї неділі!</h2>
-          <p className="section-text mx-auto" style={{ maxWidth: '600px' }}>
-            Якщо у вас залишилися запитання або ви хочете, щоб вас хтось зустрів перед входом, напишіть нам.
-          </p>
-          <div className="mt-4">
-            <Link to="/contact" className="btn btn-primary me-3">Зв'язатися з нами</Link>
-            <Link to="/events" className="btn btn-outline-secondary">Розклад подій</Link>
-          </div>
-        </div>
-      </section>
     </div>
   );
 };

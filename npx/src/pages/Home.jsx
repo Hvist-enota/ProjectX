@@ -27,8 +27,39 @@ const Home = () => {
               <p className="section-text mb-4">
                 Незалежно від того, на якому етапі духовного шляху ви знаходитесь, тут для вас завжди знайдеться місце.
               </p>
-              <Link to="/new-here" className="btn btn-primary me-3">Я тут вперше</Link>
-              <Link to="/about" className="btn btn-outline-secondary">Про нашу історію</Link>
+              <Link to="/about" className="btn btn-primary">Про нашу історію</Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Video Section */}
+      <section className="video-section py-5 bg-light">
+        <div className="container">
+          <div className="text-center mb-5">
+            <span className="section-eyebrow">Богослужіння та події</span>
+            <h2 className="section-heading">Наше життя у відео</h2>
+          </div>
+          <div className="row g-4">
+            <div className="col-md-6">
+              <div className="ratio ratio-16x9 shadow rounded overflow-hidden">
+                <iframe 
+                  src="https://www.youtube.com/embed/nlCfFydDcQA" 
+                  title="YouTube video" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                  allowFullScreen
+                ></iframe>
+              </div>
+            </div>
+            <div className="col-md-6">
+              <div className="ratio ratio-16x9 shadow rounded overflow-hidden">
+                <iframe 
+                  src="https://www.youtube.com/embed/BuJItH3hn60" 
+                  title="YouTube video" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                  allowFullScreen
+                ></iframe>
+              </div>
             </div>
           </div>
         </div>

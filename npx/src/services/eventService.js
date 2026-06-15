@@ -30,3 +30,15 @@ export const searchEventsByTitle = async (title) => {
   const response = await apiClient.get('/event/search-by-title', { params: { title } });
   return response.data;
 };
+
+export const uploadEventImage = async (eventId, imageFile) => {
+  const formData = new FormData();
+  formData.append('imageFile', imageFile);
+
+  const response = await apiClient.put(`/event/image/${eventId}`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  return response.data;
+};

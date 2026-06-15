@@ -40,9 +40,9 @@ const NewsDetails = () => {
     <div className="container mt-5">
       <h2>{news.title}</h2>
       <p className="text-muted">Дата публікації: {new Date(news.publishDate).toLocaleDateString()}</p>
-      {news.filePath && (
+      {news.photoUrl && (
         <img
-          src={news.filePath}
+          src={`${import.meta.env.VITE_API_URL || 'http://localhost:5132'}/images/newsImages/${news.photoUrl}`}
           alt={news.title}
           className="img-fluid my-4"
           style={{ maxHeight: "400px", objectFit: "cover" }}

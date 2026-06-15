@@ -19,6 +19,7 @@ export default function AdminNews() {
   const [currentNewsId, setCurrentNewsId] = useState(null);
   const [validationErrors, setValidationErrors] = useState({});
   const [deleteConfirm, setDeleteConfirm] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
 
   useEffect(() => {
     loadNews();
@@ -75,11 +76,19 @@ export default function AdminNews() {
         publishDate: new Date(currentNews.publishDate).toISOString()
       };
 
+      let savedNews;
       if (modalType === 'create') {
-        await newsService.createNews(payload);
+        savedNews = await newsService.createNews(payload);
       } else {
-        await newsService.updateNews(currentNewsId, payload);
+        savedNews = await newsService.updateNews(currentNewsId, payload);
       }
+
+      const newsId = modalType === 'create' ? savedNews.id : currentNewsId;
+      
+      if (imageFile) {
+        await newsService.uploadNewsImage(newsId, imageFile);
+      }
+
       setShowModal(false);
       await loadNews();
     } catch (err) {
@@ -95,6 +104,7 @@ export default function AdminNews() {
       publishDate: format(parseISO(news.publishDate), 'yyyy-MM-dd')
     });
     setCurrentNewsId(news.id);
+    setImageFile(null);
     setModalType('edit');
     setShowModal(true);
   };
@@ -106,6 +116,7 @@ export default function AdminNews() {
       publishDate: format(new Date(), 'yyyy-MM-dd')
     });
     setCurrentNewsId(null);
+    setImageFile(null);
     setModalType('create');
     setShowModal(true);
   };
@@ -252,6 +263,18 @@ export default function AdminNews() {
               <Form.Control.Feedback type="invalid">
                 {validationErrors.publishDate}
               </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Фотографія</Form.Label>
+              <Form.Control
+                type="file"
+                accept="image/*"
+                onChange={(e) => setImageFile(e.target.files[0])}
+              />
+              <Form.Text className="text-muted">
+                Виберіть зображення, щоб додати або оновити фотографію новини.
+              </Form.Text>
             </Form.Group>
           </Modal.Body>
           <Modal.Footer>

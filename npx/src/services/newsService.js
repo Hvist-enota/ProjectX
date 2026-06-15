@@ -36,6 +36,18 @@ export const deleteNews = async (newsId) => {
   return response.data;
 };
 
+export const uploadNewsImage = async (newsId, imageFile) => {
+  const formData = new FormData();
+  formData.append('imageFile', imageFile);
+
+  const response = await apiClient.put(`/news/image/${newsId}`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  return response.data;
+};
+
 export const searchNewsByTitle = async (title) => {
   const response = await apiClient.get('/news/search-by-title', { params: { title } });
   return response.data;

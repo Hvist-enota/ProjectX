@@ -8,6 +8,7 @@ const EventsPage = () => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [error, setError] = useState(null);
+  const [selectedEvent, setSelectedEvent] = useState(null);
 
   useEffect(() => {
     fetchEvents();
@@ -112,31 +113,59 @@ const EventsPage = () => {
         </div>
       ) : (
         <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-          {events.map((event) => (
-            <div key={event.id} className="col">
-              <div className="card h-100 shadow-sm border-0">
-                <div className="card-header bg-primary text-white">
-                  <h5 className="card-title mb-0">{event.Title}</h5>
-                </div>
-                <div className="card-body">
-                  <p className="card-text text-muted">
-                    <i className="bi bi-calendar-event me-2"></i>
-                    {formatEventDate(event.EventDate)}
-                  </p>
-                  <p className="card-text text-muted">
-                    <i className="bi bi-geo-alt me-2"></i>
-                    {event.Location || "Місце проведення буде оголошено"}
-                  </p>
-                  <p className="card-text">{event.Description}</p>
-                </div>
-                <div className="card-footer bg-transparent border-0">
-                  <button className="btn btn-outline-primary w-100">
-                    Детальніше
-                  </button>
+          {events.map((event) => {
+            const eventTitle = event.Title || event.title || 'Без назви';
+            const eventDateStr = event.EventDate || event.eventDate || event.date;
+            const eventLocation = event.Location || event.location || "Місце проведення буде оголошено";
+            const eventDescription = event.Description || event.description || "";
+            
+            return (
+              <div key={event.id} className="col">
+                <div className="card h-100 shadow-sm border-0">
+                  {event.photoUrl && (
+                    <img 
+                      src={`${import.meta.env.VITE_API_URL || 'http://localhost:5132'}/images/eventImages/${event.photoUrl}`} 
+                      className="card-img-top" 
+                      alt={eventTitle} 
+                      style={{ height: '200px', objectFit: 'cover' }}
+                    />
+                  )}
+                  <div className="card-header bg-primary text-white">
+                    <h5 className="card-title mb-0">{eventTitle}</h5>
+                  </div>
+                  <div className="card-body">
+                    <p className="card-text text-muted">
+                      <i className="bi bi-calendar-event me-2"></i>
+                      {formatEventDate(eventDateStr)}
+                    </p>
+                    <p className="card-text text-muted">
+                      <i className="bi bi-geo-alt me-2"></i>
+                      {eventLocation}
+                    </p>
+                    <p className="card-text">
+                      {eventDescription.length > 100 
+                        ? `${eventDescription.substring(0, 100)}...` 
+                        : eventDescription}
+                    </p>
+                  </div>
+                  <div className="card-footer bg-transparent border-0">
+                    <button 
+                      className="btn btn-outline-primary w-100"
+                      onClick={() => setSelectedEvent({
+                        title: eventTitle,
+                        date: formatEventDate(eventDateStr),
+                        location: eventLocation,
+                        description: eventDescription,
+                        photoUrl: event.photoUrl
+                      })}
+                    >
+                      Детальніше
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
 
@@ -157,6 +186,52 @@ const EventsPage = () => {
           </div>
         </div>
       </div>
+
+      {/* Модальне вікно для відображення деталей події */}
+      {selectedEvent && (
+        <div className="modal show d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+          <div className="modal-dialog modal-dialog-centered modal-lg">
+            <div className="modal-content">
+              <div className="modal-header bg-primary text-white">
+                <h5 className="modal-title">{selectedEvent.title}</h5>
+                <button type="button" className="btn-close btn-close-white" onClick={() => setSelectedEvent(null)} aria-label="Close"></button>
+              </div>
+              <div className="modal-body p-4">
+                <div className="d-flex flex-column gap-3">
+                  <div className="d-flex align-items-center text-muted">
+                    <i className="bi bi-calendar-event fs-4 me-3 text-primary"></i>
+                    <span className="fs-5">{selectedEvent.date}</span>
+                  </div>
+                  <div className="d-flex align-items-center text-muted">
+                    <i className="bi bi-geo-alt fs-4 me-3 text-primary"></i>
+                    <span className="fs-5">{selectedEvent.location}</span>
+                  </div>
+                  {selectedEvent.photoUrl && (
+                    <div className="mt-3 text-center">
+                      <img 
+                        src={`${import.meta.env.VITE_API_URL || 'http://localhost:5132'}/images/eventImages/${selectedEvent.photoUrl}`} 
+                        alt={selectedEvent.title}
+                        className="img-fluid rounded shadow-sm"
+                        style={{ maxHeight: '300px', objectFit: 'cover' }}
+                      />
+                    </div>
+                  )}
+                  <hr />
+                  <div>
+                    <h6 className="fw-bold mb-3">Опис події:</h6>
+                    <p style={{ whiteSpace: 'pre-wrap' }}>{selectedEvent.description}</p>
+                  </div>
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-secondary" onClick={() => setSelectedEvent(null)}>
+                  Закрити
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };

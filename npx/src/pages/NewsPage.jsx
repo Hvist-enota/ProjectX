@@ -68,11 +68,11 @@ const NewsPage = () => {
                       </Link>
                     </div>
                   </div>
-                  {featuredNews.filePath && (
+                  {featuredNews.photoUrl && (
                     <div className="col-lg-7">
                       <div className="featured-news-image-wrapper">
                         <img 
-                          src={featuredNews.filePath} 
+                          src={`${import.meta.env.VITE_API_URL || 'http://localhost:5132'}/images/newsImages/${featuredNews.photoUrl}`}
                           alt={featuredNews.title} 
                           className="featured-news-image"
                         />
@@ -89,10 +89,10 @@ const NewsPage = () => {
                 {regularNews.map((news) => (
                   <div className="col-md-6 col-lg-4" key={news.id}>
                     <div className="news-card">
-                      {news.filePath && (
+                      {news.photoUrl && (
                         <div className="news-image-wrapper">
                           <img 
-                            src={news.filePath} 
+                            src={`${import.meta.env.VITE_API_URL || 'http://localhost:5132'}/images/newsImages/${news.photoUrl}`}
                             alt={news.title} 
                             className="news-image"
                           />
