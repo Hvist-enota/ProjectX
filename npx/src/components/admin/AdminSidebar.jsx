@@ -16,15 +16,7 @@ export default function AdminSidebar() {
         <h5 className="admin-sidebar-title">⚙️ Адмін-панель</h5>
       </div>
       <ul className="admin-nav">
-        <li className="admin-nav-item">
-          <Link 
-            to="/admin" 
-            className={`admin-nav-link ${isActive('/admin') ? 'active' : ''}`}
-          >
-            <span className="admin-nav-icon">🏠</span>
-            Головна
-          </Link>
-        </li>
+
         <li className="admin-nav-item">
           <Link 
             to="/admin/statistics" 

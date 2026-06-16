@@ -1,5 +1,5 @@
 // src/routes/AppRoutes.jsx
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import AdminDashboard from "../components/admin/AdminDashboard"; // Новий імпорт
 import AdminEvents from "../components/admin/AdminEvents";
 import AdminCharity from "../components/admin/AdminCharity";
@@ -58,7 +58,7 @@ const AppRoutes = () => {
             </PrivateRoute>
           }
         >
-          <Route index element={<AdminDashboard />} />
+          <Route index element={<Navigate to="/admin/statistics" replace />} />
           <Route path="statistics" element={<AdminStatistics />} />
           <Route path="news" element={<AdminNews />} />
           <Route path="events" element={<AdminEvents />} />
