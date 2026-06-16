@@ -12,6 +12,8 @@ import About from "../pages/About";
 import AdminPanel from "../pages/AdminPanel"; // Новий імпорт
 import Contact from "../pages/Contact";
 import Donate from "../pages/Donate";
+import DonateSuccess from "../pages/DonateSuccess";
+import DonateCancel from "../pages/DonateCancel";
 import EventsPage from "../pages/EventsPage";
 import Home from "../pages/Home";
 import NewHere from "../pages/NewHere";
@@ -34,6 +36,8 @@ const AppRoutes = () => {
         <Route path="/newspage" element={<NewsPage />} />
         <Route path="/news/:id" element={<NewsDetails />} />
         <Route path="/donate" element={<Donate />} />
+        <Route path="/donate/success" element={<DonateSuccess />} />
+        <Route path="/donate/cancel" element={<DonateCancel />} />
         
         {/* Профіль користувача */}
         <Route 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Button, Form, ProgressBar, Row, Col } from "react-bootstrap";
+import { ProgressBar } from "react-bootstrap";
 import * as charityService from "../services/charityInitiativeService";
 import apiClient from "../api/axiosConfig";
 import "../styles/donate.css";
@@ -8,14 +8,8 @@ const Donate = () => {
   const [initiatives, setInitiatives] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedInitiative, setSelectedInitiative] = useState(null);
-  const [lastName, setLastName] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [patronymic, setPatronymic] = useState("");
-  const [cardNumber, setCardNumber] = useState("");
-  const [expiryDate, setExpiryDate] = useState("");
-  const [cvv, setCvv] = useState("");
   const [amount, setAmount] = useState("");
-  const [showModal, setShowModal] = useState(false);
+  const [isRedirecting, setIsRedirecting] = useState(false);
 
   const fetchInitiatives = async () => {
     setLoading(true);
@@ -35,40 +29,34 @@ const Donate = () => {
 
   const handleOpen = (initiative) => {
     setSelectedInitiative(initiative);
-    setShowModal(true);
+    setAmount("");
   };
 
   const handleClose = () => {
-    setShowModal(false);
-    setLastName("");
-    setFirstName("");
-    setPatronymic("");
-    setCardNumber("");
-    setExpiryDate("");
-    setCvv("");
-    setAmount("");
     setSelectedInitiative(null);
+    setAmount("");
   };
 
   const handleDonate = async (e) => {
     e.preventDefault();
-    if (!lastName || !firstName || !patronymic || !cardNumber || !expiryDate || !cvv || !amount) {
-      alert("Будь ласка, заповніть всі поля");
+    if (!amount || parseFloat(amount) <= 0) {
+      alert("Будь ласка, введіть суму пожертви");
       return;
     }
-    if (cardNumber.replace(/\s/g, '').length !== 16) {
-      alert("Номер картки має містити 16 цифр");
-      return;
-    }
-    
+
+    setIsRedirecting(true);
     try {
-      await charityService.donateToCharityInitiative(selectedInitiative.id, parseFloat(amount));
-      alert(`Дякуємо, ${firstName} ${lastName}! Ваша пожертва у розмірі ${amount} ₴ на "${selectedInitiative.title}" успішно прийнята.`);
-      handleClose();
-      fetchInitiatives();
+      const { sessionUrl } = await charityService.createCheckoutSession(
+        selectedInitiative.id,
+        selectedInitiative.title,
+        amount
+      );
+      // Redirect to Stripe Checkout
+      window.location.href = sessionUrl;
     } catch (error) {
-      console.error("Помилка при пожертві:", error);
-      alert("Сталася помилка при обробці пожертви. Спробуйте пізніше.");
+      console.error("Помилка при створенні платежу:", error);
+      alert("Сталася помилка. Спробуйте пізніше.");
+      setIsRedirecting(false);
     }
   };
 
@@ -81,7 +69,7 @@ const Donate = () => {
               <span className="section-eyebrow">Служіння та Підтримка</span>
               <h1 className="donate-page-title">Дар любові</h1>
               <p className="donate-page-subtitle">
-                "Кожен нехай дає за велінням серця, не з жалем чи з примусу, бо Бог любить того, хто дає з радістю" (2 Кор. 9:7). 
+                "Кожен нехай дає за велінням серця, не з жалем чи з примусу, бо Бог любить того, хто дає з радістю" (2 Кор. 9:7).
                 Ваша підтримка допомагає нам нести світло, надію та практичну допомогу тим, хто цього найбільше потребує.
               </p>
             </div>
@@ -117,7 +105,7 @@ const Donate = () => {
 
       <section className="donate-section">
         <h2 className="mb-5 text-center">Активні Ініціативи</h2>
-        
+
         {loading ? (
           <div className="text-center my-5">
             <div className="spinner-border text-primary" role="status">
@@ -130,142 +118,98 @@ const Donate = () => {
           </div>
         ) : (
           <div className="initiatives-grid">
-          {initiatives.map((item) => (
-            <div key={item.id} className="initiative-card" onClick={() => handleOpen(item)}>
-              {item.photoUrl ? (
-                <div className="initiative-image-container">
-                  <img src={`${apiClient.defaults.baseURL}/images/charity-initiatives/${item.photoUrl}`} alt={item.title} className="initiative-image" />
-                </div>
-              ) : (
-                <div className="initiative-icon">❤️</div>
-              )}
-              <div className="initiative-content">
-                <h3>{item.title}</h3>
-                <p>{item.description}</p>
-                
-                <div className="progress-section mt-3 mb-3">
-                  <div className="d-flex justify-content-between mb-1" style={{ fontSize: '0.85rem' }}>
-                    <span>Зібрано: <strong>{item.currentAmount} ₴</strong></span>
-                    <span>Ціль: <strong>{item.targetAmount} ₴</strong></span>
+            {initiatives.map((item) => (
+              <div key={item.id} className="initiative-card" onClick={() => handleOpen(item)}>
+                {item.photoUrl ? (
+                  <div className="initiative-image-container">
+                    <img src={`${apiClient.defaults.baseURL}/images/charity-initiatives/${item.photoUrl}`} alt={item.title} className="initiative-image" />
                   </div>
-                  <ProgressBar 
-                    now={item.targetAmount > 0 ? (item.currentAmount / item.targetAmount) * 100 : 0} 
-                    variant="success" 
-                    style={{ height: '8px' }}
-                  />
+                ) : (
+                  <div className="initiative-icon">❤️</div>
+                )}
+                <div className="initiative-content">
+                  <h3>{item.title}</h3>
+                  <p>{item.description}</p>
+
+                  <div className="progress-section mt-3 mb-3">
+                    <div className="d-flex justify-content-between mb-1" style={{ fontSize: '0.85rem' }}>
+                      <span>Зібрано: <strong>{item.currentAmount} ₴</strong></span>
+                      <span>Ціль: <strong>{item.targetAmount} ₴</strong></span>
+                    </div>
+                    <ProgressBar
+                      now={item.targetAmount > 0 ? (item.currentAmount / item.targetAmount) * 100 : 0}
+                      variant="success"
+                      style={{ height: '8px' }}
+                    />
+                  </div>
+
+                  <button className="donate-button-small mt-auto">Підтримати</button>
                 </div>
-                
-                <button className="donate-button-small mt-auto">Підтримати</button>
               </div>
-            </div>
-          ))}
+            ))}
           </div>
         )}
+      </section>
 
-      <Modal show={showModal} onHide={handleClose} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Пожертва: {selectedInitiative?.title}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={handleDonate}>
-            <h6 className="mb-3 border-bottom pb-2">Ваші дані</h6>
-            <Form.Group className="mb-3" controlId="formLastName">
-              <Form.Label>Прізвище</Form.Label>
-              <Form.Control 
-                type="text" 
-                placeholder="Введіть прізвище" 
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-                required 
-              />
-            </Form.Group>
-            
-            <Row className="mb-3">
-              <Col md={6}>
-                <Form.Group controlId="formFirstName">
-                  <Form.Label>Ім'я</Form.Label>
-                  <Form.Control 
-                    type="text" 
-                    placeholder="Введіть ім'я" 
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    required 
-                  />
-                </Form.Group>
-              </Col>
-              <Col md={6}>
-                <Form.Group controlId="formPatronymic">
-                  <Form.Label>По батькові</Form.Label>
-                  <Form.Control 
-                    type="text" 
-                    placeholder="Введіть по батькові" 
-                    value={patronymic}
-                    onChange={(e) => setPatronymic(e.target.value)}
-                    required 
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
+      {/* Donate Modal — amount only, card handled by Stripe */}
+      {selectedInitiative && (
+        <div className="stripe-modal-overlay" onClick={handleClose}>
+          <div className="stripe-modal" onClick={(e) => e.stopPropagation()}>
+            <button className="stripe-modal-close" onClick={handleClose}>✕</button>
 
-            <h6 className="mb-3 mt-4 border-bottom pb-2">Реквізити картки</h6>
-            <Form.Group className="mb-3" controlId="formCardNumber">
-              <Form.Label>Номер картки</Form.Label>
-              <Form.Control 
-                type="text" 
-                placeholder="XXXX XXXX XXXX XXXX" 
-                value={cardNumber}
-                onChange={(e) => setCardNumber(e.target.value.replace(/\D/g, '').substring(0, 16))}
-                required 
-              />
-            </Form.Group>
+            <div className="stripe-modal-header">
+              <div className="stripe-modal-icon">🙏</div>
+              <h2 className="stripe-modal-title">Пожертва</h2>
+              <p className="stripe-modal-initiative">{selectedInitiative.title}</p>
+            </div>
 
-            <Row className="mb-3">
-              <Col xs={6}>
-                <Form.Group controlId="formExpiryDate">
-                  <Form.Label>Термін дії (ММ/РР)</Form.Label>
-                  <Form.Control 
-                    type="text" 
-                    placeholder="ММ/РР" 
-                    value={expiryDate}
-                    onChange={(e) => setExpiryDate(e.target.value.substring(0, 5))}
-                    required 
-                  />
-                </Form.Group>
-              </Col>
-              <Col xs={6}>
-                <Form.Group controlId="formCvv">
-                  <Form.Label>CVV</Form.Label>
-                  <Form.Control 
-                    type="password" 
-                    placeholder="XXX" 
-                    value={cvv}
-                    onChange={(e) => setCvv(e.target.value.replace(/\D/g, '').substring(0, 3))}
-                    required 
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
+            <form onSubmit={handleDonate} className="stripe-modal-form">
+              <label className="stripe-modal-label">Сума пожертви (₴)</label>
 
-            <h6 className="mb-3 mt-4 border-bottom pb-2">Сума пожертви</h6>
-            <Form.Group className="mb-4" controlId="formAmount">
-              <Form.Label>Сума (₴)</Form.Label>
-              <Form.Control 
-                type="number" 
-                placeholder="Введіть суму" 
+              {/* Quick amount buttons */}
+              <div className="stripe-amount-presets">
+                {[100, 200, 500, 1000].map(preset => (
+                  <button
+                    key={preset}
+                    type="button"
+                    className={`stripe-preset-btn ${amount == preset ? 'active' : ''}`}
+                    onClick={() => setAmount(String(preset))}
+                  >
+                    {preset} ₴
+                  </button>
+                ))}
+              </div>
+
+              <input
+                className="stripe-amount-input"
+                type="number"
+                placeholder="Або введіть свою суму"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
                 min="1"
-                required 
+                required
               />
-            </Form.Group>
-            
-            <Button variant="success" type="submit" className="w-100 donate-submit-btn py-2">
-              Зробити внесок
-            </Button>
-          </Form>
-        </Modal.Body>
-      </Modal>
-      </section>
+
+              <div className="stripe-secure-note">
+                <span>🔒</span>
+                <span>Безпечна оплата через Stripe. Дані картки не передаються на наш сервер.</span>
+              </div>
+
+              <button
+                type="submit"
+                className="stripe-submit-btn"
+                disabled={isRedirecting}
+              >
+                {isRedirecting ? (
+                  <span>Перенаправлення... <span className="stripe-spinner" /></span>
+                ) : (
+                  <span>Перейти до оплати →</span>
+                )}
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

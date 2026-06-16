@@ -28,9 +28,13 @@ export const updateCharityInitiative = async (id, formData) => {
   return response.data;
 };
 
-export const donateToCharityInitiative = async (id, amount) => {
-  const response = await apiClient.post(`/charity-initiatives/donate/${id}`, { amount });
-  return response.data;
+export const createCheckoutSession = async (initiativeId, initiativeTitle, amount) => {
+  const response = await apiClient.post('/stripe/create-checkout-session', {
+    initiativeId,
+    initiativeTitle,
+    amount: parseFloat(amount)
+  });
+  return response.data; // { sessionUrl: "https://checkout.stripe.com/..." }
 };
 
 export const deleteCharityInitiative = async (id) => {
