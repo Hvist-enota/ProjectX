@@ -1,15 +1,7 @@
-import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getAboutImages } from '../services/aboutService';
-import apiClient from "../api/axiosConfig";
 import "../styles/about.css";
 
 export default function About() {
-  const [images, setImages] = useState([]);
-
-  useEffect(() => {
-    getAboutImages().then(setImages);
-  }, []);
 
   return (
     <div className="about-wrapper">
@@ -41,41 +33,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* Gallery Section */}
-      <section className="about-gallery-section bg-light py-5">
-        <div className="container">
-          <div className="text-center mb-5">
-            <h2 className="gallery-heading">Обличчя нашої спільноти</h2>
-            <p className="text-muted">Люди, які творять історію церкви щодня.</p>
-          </div>
-          
-          <div className="row g-4">
-            {images.map(img => (
-              <div key={img.id} className="col-12 col-sm-6 col-md-4 col-lg-3">
-                <div className="about-member-card">
-                  <div className="member-image-wrapper">
-                    <img 
-                      src={`${apiClient.defaults.baseURL}/images/aboutUsImages/${img?.filePath}`} 
-                      className="member-image" 
-                      alt={img.name} 
-                    />
-                  </div>
-                  <div className="member-info">
-                    <h3 className="member-name">{img.name}</h3>
-                    <p className="member-role">{img.description}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-            
-            {images.length === 0 && (
-              <div className="col-12 text-center text-muted">
-                <p>Немає завантажених фотографій.</p>
-              </div>
-            )}
-          </div>
-        </div>
-      </section>
+
     </div>
   );
 }
